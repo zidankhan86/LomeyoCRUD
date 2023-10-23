@@ -47,4 +47,24 @@ class StudentController extends Controller
     $student = Student::find($id);
     return view('edit.edit',compact('student'));
  }
+
+ public function studentEditCreate(Request $request,$id){
+    $studentsUpdate = Student::find($id);
+    $imageName = time() . '.' . $request->file('image')->extension();
+    $request->file('image')->storeAs('uploads', $imageName, 'public');
+
+    try {
+        $studentsUpdate->update([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "image" => $imageName,
+        ]);
+
+        return back()->with('success', ' student updates.');
+    } catch (\Exception $e) {
+
+        return back()->with('error', 'An error occurred while updating the student.');
+    }
+ }
 }
