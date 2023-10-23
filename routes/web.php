@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/app', function () {
     return view('welcome');
 });
 //Pages
 Route::get('/form',[StudentController::class,'studentForm']);
-Route::get('/list',[StudentController::class,'studentList']);
+Route::get('/',[StudentController::class,'studentList']);
 //Post
 Route::post('/student-form-create',[StudentController::class,'studentCreate']);
 //Edit
