@@ -11,18 +11,40 @@ class StudentController extends Controller
     return view('studentForm');
  }
  public function studentList(){
-    return view('studentList');
+    $students = Student::all();
+    return view('studentList',compact('students'));
  }
 
  public function studentCreate(Request $request){
-    //dd($request->all());
-    Student::create([
-        "name"=>$request->name,
-        "email"=>$request->name,
-        "password"=>bcrypt($request->password),
-        "image"=>$request->image,
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:students,email',
+        'password' => 'required|min:6',
+        'image'=>'required'
     ]);
-    return back();
+    $imageName = time() . '.' . $request->file('image')->extension();
+    $request->file('image')->storeAs('uploads', $imageName, 'public');
 
+    //dd($request->all());
+    try {
+        Student::create([
+            "name" => $request->name,
+            "email" => $request->email,
+            "password" => bcrypt($request->password),
+            "image" => $imageName,
+        ]);
+
+        return back()->with('success', ' student created.');
+    } catch (\Exception $e) {
+
+        return back()->with('error', 'An error occurred while creating the student.');
+    }
+
+
+ }
+
+ public function studentEdit($id){
+    $student = Student::find($id);
+    return view('edit.edit',compact('student'));
  }
 }

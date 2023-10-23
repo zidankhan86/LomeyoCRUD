@@ -12,7 +12,7 @@
             background: #C5E1A5;
         }
         .sidebar {
-            width: 200px;
+            width: 180px;
             position: fixed;
             top: 0;
             left: 0;

@@ -22,3 +22,5 @@ Route::get('/form',[StudentController::class,'studentForm']);
 Route::get('/list',[StudentController::class,'studentList']);
 //Post
 Route::post('/student-form-create',[StudentController::class,'studentCreate']);
+//Edit
+Route::get('/student-edit/{id}',[StudentController::class,'studentEdit']);
