@@ -67,4 +67,10 @@ class StudentController extends Controller
         return back()->with('error', 'An error occurred while updating the student.');
     }
  }
+
+ public function studentDelete($id){
+    $delete= Student::find($id);
+    $delete->delete();
+    return back();
+ }
 }
